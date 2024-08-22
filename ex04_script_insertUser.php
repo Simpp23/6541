@@ -40,12 +40,12 @@ include('condb.php');
 
 
         // if ($result !== false) {
-
+        
         //     echo "เพิ่มข้อมูลเรียบร้อยแล้ว";
         // } else {
         //     echo "เกิดข้อผิดพลาดในการเพิ่มข้อมูล";
         // }
-
+        
 
         //sweet alert
         echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
@@ -59,7 +59,7 @@ include('condb.php');
             showConfirmButton: false,
              timer: 1500
             }).then(function() {
-            window.location = "index.php"; // Redirect to.. ปรับแก ้ชอไฟล์ตามที่ต้องการให ้ไป ื่
+            window.location = "ex05_showUser.php"; // Redirect to.. ปรับแก ้ชอไฟล์ตามที่ต้องการให ้ไป ื่
             });
             }, 1000);
             </script>';
