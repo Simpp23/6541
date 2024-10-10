@@ -46,26 +46,29 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         $role = 'User';
                     }
                     ?>
-                <tr>
-                    <td><?php echo $us['id']; ?></td>
-                    <td><?php echo $us['fname']; ?></td>
-                    <td><?php echo $us['iname']; ?></td>
-                    <td><?php echo $us['email']; ?></td>
-                    <td><?php echo $us['password']; ?></td>
-                    <td><?php echo $role ?></td>
-                    <td>
-                        <input type="submit" name="delete" value="Edit" class="btn btn-warning">
+                    <tr>
+                        <td><?php echo $us['id']; ?></td>
+                        <td><?php echo $us['fname']; ?></td>
+                        <td><?php echo $us['iname']; ?></td>
+                        <td><?php echo $us['email']; ?></td>
+                        <td><?php echo $us['password']; ?></td>
+                        <td><?php echo $role ?></td>
+                        <td>
+                            <form action="ex07_form_updataUser.php" method="POST" style="display:inline;">
+                                <input type="hidden" name="user_id" value="<?php echo $us['id']; ?>">
+                                <input type="submit" name="edit" value="Edit" class="btn btn-warning btn-sm">
+                            </form>
 
-                        <form action="ex06_deleteSweet.php" method="POST" style="display:inline;">
-                            <input type="hidden" name="user_id" value="<?php echo $us['id']; ?>">
-                            <!-- <input type="submit" name="delete" value="Delete" class="btn btn-danger btn-sm"> -->
-                            <button type="button" class="btn btn-danger btn-sm delete-button"
-                                data-user-id="<?php echo $us['id']; ?>">Delete</button>
-                        </form>
+                            <form action="ex06_deleteSweet.php" method="POST" style="display:inline;">
+                                <input type="hidden" name="user_id" value="<?php echo $us['id']; ?>">
+                                <!-- <input type="submit" name="delete" value="Delete" class="btn btn-danger btn-sm"> -->
+                                <button type="button" class="btn btn-danger btn-sm delete-button"
+                                    data-user-id="<?php echo $us['id']; ?>">Delete</button>
+                            </form>
 
 
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
@@ -80,45 +83,45 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <script src="http://cdn.datatables.net/2.1.2/js/dataTables.min.js"></script>
 
 <script>
-$(document).ready(function() {
-    $('#something').DataTable();
-});
+    $(document).ready(function () {
+        $('#something').DataTable();
+    });
 </script>
 
 <script>
-// ฟังก์ชันสาหรับแสดงกล่องยืนยัน ํ SweetAlert2
-function showDeleteConfirmation(userId) {
-    Swal.fire({
-        title: 'คุณแน่ใจหรือไม่?',
-        text: 'คุณจะไม่สามารถเรียกคืนข ้อมูลกลับได ้!',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'ลบ',
-        cancelButtonText: 'ยกเลิก',
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // หากผู้ใชยืนยัน ให ้ส ้ งค่าฟอร์มไปยัง ่ delete.php เพื่อลบข ้อมูล
-            const form = document.createElement('form');
-            form.method = 'POST';
-            form.action = 'ex06_deleteSweet.php';
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = 'user_id';
-            input.value = userId;
-            form.appendChild(input);
-            document.body.appendChild(form);
-            form.submit();
-        }
+    // ฟังก์ชันสาหรับแสดงกล่องยืนยัน ํ SweetAlert2
+    function showDeleteConfirmation(userId) {
+        Swal.fire({
+            title: 'คุณแน่ใจหรือไม่?',
+            text: 'คุณจะไม่สามารถเรียกคืนข ้อมูลกลับได ้!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'ลบ',
+            cancelButtonText: 'ยกเลิก',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // หากผู้ใชยืนยัน ให ้ส ้ งค่าฟอร์มไปยัง ่ delete.php เพื่อลบข ้อมูล
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = 'ex06_deleteSweet.php';
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'user_id';
+                input.value = userId;
+                form.appendChild(input);
+                document.body.appendChild(form);
+                form.submit();
+            }
+        });
+    }
+    // แนบตัวตรวจจับเหตุการณ์คลิกกับองค์ปุ่ มลบทั้งหมดที่มีคลาส delete-button
+    const deleteButtons = document.querySelectorAll('.delete-button');
+    deleteButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            const userId = button.getAttribute('data-user-id');
+            showDeleteConfirmation(userId);
+        });
     });
-}
-// แนบตัวตรวจจับเหตุการณ์คลิกกับองค์ปุ่ มลบทั้งหมดที่มีคลาส delete-button
-const deleteButtons = document.querySelectorAll('.delete-button');
-deleteButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-        const userId = button.getAttribute('data-user-id');
-        showDeleteConfirmation(userId);
-    });
-});
 </script>
 
 </html>
