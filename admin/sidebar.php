@@ -1,10 +1,40 @@
-  <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
-      <img src="../assets/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">A-Mirrr</span>
-    </a>
+<?php
+require_once '../condb.php';
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
+if (isset($_SESSION['admin_login'])) {
+  $user_id = $_SESSION['admin_login'];
+  $sql = "SELECT persons.*, tb_users.* FROM persons
+LEFT JOIN tb_users ON persons.id = tb_users.person_id
+WHERE persons.id = ?";
+  $stmt = $conn->prepare($sql);
+  $stmt->bindParam(1, $user_id);
+  $stmt->execute();
+  $us = $stmt->fetch(PDO::FETCH_ASSOC);
+  extract($us); // ไม่ตอ้งสร้างตวัแปรมารองรับ เรียกใชผ้า่ นชื่อฟิลดไ์ ดเ้ลย
+  $imageURL = '../assets/dist/avatar/' . $avatar;
+}
+// ตรวจสอบวา่ มีการอปัโหลดรูปภาพหรือไม่ถา้ไม่มีให้ใชรู้ปภาพตวัอยา่ งแทน
+$imageURL = !empty($avatar) ? $imageURL : '../assets/dist/avatar/user1.jpg';
+?>
+
+
+
+
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <!-- Brand Logo -->
+  <a href="#" class="brand-link">
+    <div style="display: flex; flex-direction: column; align-items: center;">
+      <img src="<?php echo $imageURL ?>" style="width: 50%; max-width: 150px; height: auto;" class="img-circle ">
+      <!-- <br> -->
+      <span class="brand-text font-weight-light"><?php echo $us['fname'] . ' ' . $us['iname']; ?></span>
+    </div>
+  </a>
+
+ 
+ 
 
     <!-- Sidebar -->
     <div class="sidebar">

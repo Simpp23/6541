@@ -3,32 +3,47 @@
 require_once '../condb.php';
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
-    }
+}
 
-    
-    if (isset($_SESSION['user_login'])) {
 
-        $id = $_SESSION['user_login'];
-        $sql = "SELECT persons.*, tb_users.* FROM persons
+if (isset($_SESSION['user_login'])) {
+
+    $id = $_SESSION['user_login'];
+    $sql = "SELECT persons.*, tb_users.* FROM persons
         LEFT JOIN tb_users ON persons.id = tb_users.person_id WHERE
         tb_users.id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(1, $id);
-        $stmt->execute();
-        $users = $stmt->fetch(PDO::FETCH_ASSOC);
-        extract($users);
-        $imageURL = '../assets/dist/avatar/'.$avatar;
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(1, $id);
+    $stmt->execute();
+    $users = $stmt->fetch(PDO::FETCH_ASSOC);
+    extract($users);
+    $imageURL = '../assets/dist/avatar/' . $avatar;
 
-        // $id = $users['id'];
-        // $fname = $users['fname'];
-        // $iname = $users['iname'];
-        // $email = $users['email'];
-        // $dob = $users['dob'];
-        // $avatar = $users['avatar'];
-        // $password = $users['password'];
-        // $role = $users['role'];
+    // $id = $users['id'];
+    // $fname = $users['fname'];
+    // $iname = $users['iname'];
+    // $email = $users['email'];
+    // $dob = $users['dob'];
+    // $avatar = $users['avatar'];
+    // $password = $users['password'];
+    // $role = $users['role'];
 
-    }
+    // ดึงขอ้ มูลชมรมท้งัหมดจากตาราง clubs
+    $sqlClubs = "SELECT id, title FROM clubs";
+    $stmtClubs = $conn->prepare($sqlClubs);
+    $stmtClubs->execute();
+    $clubs = $stmtClubs->fetchAll(PDO::FETCH_ASSOC);
+
+
+
+    // ดึงข้อมูลเพศจากตาราง refs
+    $genderSql = "SELECT id, title FROM refs WHERE ref_group_id = 2"; // 2 คือref_group_id ของเพศ
+    $genderStmt = $conn->prepare($genderSql);
+    $genderStmt->execute();
+    $genders = $genderStmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+}
 ?>
 
 
@@ -90,18 +105,50 @@ if (session_status() === PHP_SESSION_NONE) {
                             </div>
                             <div class="mb-3">
                                 <label for="dob" class="form-label">Date of Birth</label>
-                                <input type="date" class="form-control" name="dob" id="dob"
-                                    aria-describedby="dob" value="<?php echo $dob; ?>">
+                                <input type="date" class="form-control" name="dob" id="dob" aria-describedby="dob"
+                                    value="<?php echo $dob; ?>">
                             </div>
                             <div class="mb-3">
                                 <label for="avatar" class="form-label">Photo</label><br>
-                                <img src="<?php echo $imageURL ?>" height="100"
-                                    width="100" class="mb-2" >
+                                <img src="<?php echo $imageURL ?>" height="100" width="100" class="mb-2">
 
                                 <input type="file" class="form-control" name="avatar" id="avatar"
                                     aria-describedby="avatar" value="<?php echo $avatar; ?>">
                             </div>
-                           
+
+                            <div class="mb-3 ">
+                                <label for="club" class="form-label">สังกัดชมรม</label>
+                                <select class="form-control" name="club" id="club">
+                                    <option value="">เลือกชมรม</option>
+                                    <?php foreach ($clubs as $club): ?>
+                                        <option value="<?php echo $club['id']; ?>" <?php if (
+                                               $club['id']
+                                               == $us['club_id']
+                                           )
+                                               echo 'selected'; ?>>
+                                            <?php echo $club['title']; ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="gender" class="form-label">Gender</label>
+                                <select class="form-control" name="gender" id="gender">
+                                <option value="">เลือกเพศ</option>   
+                                <?php foreach ($genders as $gender): ?>
+                                        <option value="<?php echo $gender['id']; ?>" <?php if (
+                                               $gender['id']
+                                               == $us['gender_id']
+                                           )
+                                               echo 'selected'; ?>>
+                                            <?php echo $gender['title']; ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+
+
 
 
 
