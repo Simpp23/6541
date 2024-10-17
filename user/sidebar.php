@@ -60,6 +60,14 @@ $imageURL = !empty($avatar) ? $imageURL : '../assets/dist/avatar/user1.jpg';
           </a>
         </li>
         <li class="nav-item">
+          <a href="change_password.php" class="nav-link">
+            <i class="nav-icon fas fa-chart-pie" style="color: gold;"></i>
+            <p>
+              เปลี่ยนรหัสผ่าน
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
           <a href="tmp_form.php" class="nav-link">
             <i class="nav-icon far fa-edit"></i>
             <p>

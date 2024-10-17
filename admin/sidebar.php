@@ -47,15 +47,23 @@ $imageURL = !empty($avatar) ? $imageURL : '../assets/dist/avatar/user1.jpg';
 
           <li class="nav-item">
             <a href="index.php" class="nav-link">
-              <i class="nav-icon fas fa-home"></i>
+              <i class="nav-icon fas fa-home" style="color: gold;"></i>
               <p>
                 หน้าหลัก
               </p>
             </a>
           </li>
           <li class="nav-item">
+            <a href="view_all_member.php" class="nav-link">
+              <i class="nav-icon fas fa-chart-pie" style="color: gold;"></i>
+              <p>
+                แสดงข้อมูลสมาชิก
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="show_member.php" class="nav-link">
-              <i class="nav-icon fas fa-chart-pie"></i>
+              <i class="nav-icon fas fa-chart-pie" style="color: gold;"></i>
               <p>
                 จัดการข้อมูลสมาชิก
               </p>
@@ -103,7 +111,7 @@ $imageURL = !empty($avatar) ? $imageURL : '../assets/dist/avatar/user1.jpg';
           </li>
           <li class="nav-item">
             <a href="../logout.php" class="nav-link">
-              <i class="nav-icon fas fa-door-open"></i>
+              <i class="nav-icon fas fa-door-open" style="color: gold;"></i>
               <p>
                 Logout
               </p>

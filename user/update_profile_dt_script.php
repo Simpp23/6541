@@ -15,6 +15,7 @@ echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
         
         $dob = $_POST['dob'];
         $club_id = $_POST['club']; // รับค่าของ club_id จากฟอร์ม
+        $gender_id = $_POST['gender']; // รับค่า gender_id จากฟอร์ม
        
             // ดึงข้อมูลผู้ใช้จากฐานข้อมูลเพื่อตรวจสอบรูปภาพเดิม
             $sql = "SELECT avatar FROM persons WHERE id = ?";
@@ -106,14 +107,15 @@ echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
         try {
 
             // คำสั่ง SQL สำหรับบันทึก fname และ lname ลงตาราง persons
-            $sql1 = "UPDATE persons SET fname = ?, iname = ?, dob = ?, avatar = ?, club_id = ? WHERE id = ?";
+            $sql1 = "UPDATE persons SET fname = ?, iname = ?, dob = ?, avatar = ?, club_id = ?,gender_id = ? WHERE id = ?";
             $stmt1 = $conn->prepare($sql1);
             $stmt1->bindParam(1, $fname);
             $stmt1->bindParam(2, $lname);
             $stmt1->bindParam(3, $dob);
             $stmt1->bindParam(4, $avatar);
             $stmt1->bindParam(5, $club_id);
-            $stmt1->bindParam(6, $id);
+            $stmt1->bindParam(6, $gender_id);
+            $stmt1->bindParam(7, $id);
             $stmt1->execute();
 
 
